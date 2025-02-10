@@ -1,9 +1,10 @@
 package storage
 
+import "time"
+
 type ClickLog struct {
-	Timestamp string `json:"timestamp"`
-	PageURL   string `json:"page_url"`
-	ShortURL  string `json:"short_url"`
-	UserAgent string `json:"user_agent"`
-	IPAddress string `json:"ip_address"`
+	ID        int       `json:"id"`
+	UserAgent string    `json:"user_agent"`
+	IPAddress string    `json:"ip_address"`
+	Timestamp time.Time `json:"created_at"`
 }

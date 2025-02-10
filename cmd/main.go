@@ -13,5 +13,7 @@ func main() {
 	}
 	defer db.Close()
 
+	go rabbitmq.StartServer(db)
+
 	rabbitmq.ConsumeMessages(db)
 }
