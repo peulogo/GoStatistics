@@ -47,9 +47,9 @@ func ConnectDB() (*sql.DB, error) {
 
 func SaveClickLog(db *sql.DB, logEntry ClickLog) error {
 	_, err := db.Exec(`
-		INSERT INTO click_logs (user_agent, ip_address, timestamp)
-		VALUES ($1, $2, NOW())`,
-		logEntry.UserAgent, logEntry.IPAddress,
+		INSERT INTO click_log (short_url_id, user_agent, ip_address, created_at)
+		VALUES ($1, $2, $3, $4)`,
+		logEntry.ShortURLID, logEntry.UserAgent, logEntry.IPAddress, logEntry.Timestamp,
 	)
 	return err
 }

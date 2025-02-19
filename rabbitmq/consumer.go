@@ -13,7 +13,7 @@ import (
 )
 
 func GetClickLogs(w http.ResponseWriter, r *http.Request, db *sql.DB) {
-	rows, err := db.Query(`SELECT id, user_agent, ip_address, timestamp FROM click_logs ORDER BY timestamp DESC`)
+	rows, err := db.Query(`SELECT id, short_url_id, user_agent, ip_address, created_at FROM click_log ORDER BY created_at DESC`)
 	if err != nil {
 		http.Error(w, "Ошибка при получении данных", http.StatusInternalServerError)
 		log.Printf("Ошибка запроса в базу данных: %v", err)
@@ -24,7 +24,7 @@ func GetClickLogs(w http.ResponseWriter, r *http.Request, db *sql.DB) {
 	var logs []storage.ClickLog
 	for rows.Next() {
 		var logEntry storage.ClickLog
-		if err := rows.Scan(&logEntry.ID, &logEntry.UserAgent, &logEntry.IPAddress, &logEntry.Timestamp); err != nil {
+		if err := rows.Scan(&logEntry.ID, &logEntry.ShortURLID, &logEntry.UserAgent, &logEntry.IPAddress, &logEntry.Timestamp); err != nil {
 			log.Printf("Ошибка чтения данных из базы: %v", err)
 			http.Error(w, "Ошибка при чтении данных", http.StatusInternalServerError)
 			return
